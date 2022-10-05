@@ -1,6 +1,7 @@
 from typing import List
 from datetime import timedelta
 import numpy.typing as npt
+import numpy as np
 from tqdm import tqdm
 import itertools
 import os
