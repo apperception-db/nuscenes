@@ -1,5 +1,0 @@
-python-opencv
-notebook
-numpy
-pandas
-pyquaternion
