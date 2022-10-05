@@ -21,7 +21,7 @@ def validator(tokens: "Set[str]") -> "Dict[str, Callable[[dict], bool]]":
         def v(e: dict) -> bool:
             assert {*config.keys()} == {*e.keys()}
             values = (
-                (e[k] if len(v) == 0 else e[k][:-len(v)]) in tokens
+                (e[k] if len(v) == 0 else e[k][: -len(v)]) in tokens
                 for k, v in config.items()
                 if v is not None and e[k] is not None
             )
@@ -31,16 +31,22 @@ def validator(tokens: "Set[str]") -> "Dict[str, Callable[[dict], bool]]":
                 return False
             print(e)
             print(*config.items())
-            raise Exception([(e[k], k, v) for k, v in config.items() if v is not None and e[k] is not None])
+            raise Exception(
+                [
+                    (e[k], k, v)
+                    for k, v in config.items()
+                    if v is not None and e[k] is not None
+                ]
+            )
 
         return v
-    
+
     def roadSection(e: dict) -> bool:
         assert {"id", "forwardLanes", "backwardLanes"} == {*e.keys()}
         values = (
-            e["id"][:-len("_sec")] in tokens,
-            *(lane[:-len("_sec")] in tokens for lane in e["forwardLanes"]),
-            *(lane[:-len("_sec")] in tokens for lane in e["backwardLanes"]),
+            e["id"][: -len("_sec")] in tokens,
+            *(lane[: -len("_sec")] in tokens for lane in e["forwardLanes"]),
+            *(lane[: -len("_sec")] in tokens for lane in e["backwardLanes"]),
         )
         if all(values):
             return True
@@ -48,7 +54,6 @@ def validator(tokens: "Set[str]") -> "Dict[str, Callable[[dict], bool]]":
             return False
         raise Exception()
 
-    
     return {
         "intersection": factory(id="_inter", road=""),
         "lane_LaneSec": factory(laneSec="_sec", lane=""),
@@ -56,7 +61,14 @@ def validator(tokens: "Set[str]") -> "Dict[str, Callable[[dict], bool]]":
         "laneGroup_Lane": factory(laneGroup="", lane=""),
         "laneGroup_opposite": factory(lane="", opposite=""),
         "laneGroup": factory(id=""),
-        "laneSection": factory(id="_sec", laneToLeft="_sec", laneToRight="_sec", fasterLane="_sec", slowerLane="_sec", isForward=None),
+        "laneSection": factory(
+            id="_sec",
+            laneToLeft="_sec",
+            laneToRight="_sec",
+            fasterLane="_sec",
+            slowerLane="_sec",
+            isForward=None,
+        ),
         "polygon": factory(id="", polygon=None),
         "road_laneGroup": factory(laneGroup="", road=""),
         "road_roadSec": factory(roadSec="_sec", road=""),

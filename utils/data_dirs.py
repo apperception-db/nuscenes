@@ -53,7 +53,7 @@ def data_dirs(experiment: bool = False):
         if d.startswith("v1.0-"):
             folder = d
             break
-    
+
     if NUSCENES_RAW_ROAD in os.environ:
         raw_road = os.environ[NUSCENES_RAW_ROAD]
     else:
@@ -63,7 +63,7 @@ def data_dirs(experiment: bool = False):
         processed_road = os.environ[NUSCENES_PROCESSED_ROAD]
     else:
         processed_road = os.path.join(DATA, "processed", ROAD)
-    
+
     if NUSCENES_RAW_MAP in os.environ:
         raw_map = os.environ[NUSCENES_RAW_MAP]
     else:
@@ -74,5 +74,14 @@ def data_dirs(experiment: bool = False):
     else:
         processed_map = os.path.join(DATA, "processed", MAP)
 
-
-    return Dirs(raw_dir, processed_dir, folder, experiment_dir, suffix, raw_road, processed_road, raw_map, processed_map)
+    return Dirs(
+        raw_dir,
+        processed_dir,
+        folder,
+        experiment_dir,
+        suffix,
+        raw_road,
+        processed_road,
+        raw_map,
+        processed_map,
+    )
