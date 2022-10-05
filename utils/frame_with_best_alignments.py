@@ -2,6 +2,7 @@ from typing import List
 
 from .typings import Frame
 
+
 def frame_with_best_alignments(scene: "List[Frame]", fps: int):
     max_aligned_frames = -1
     frame_idx = None

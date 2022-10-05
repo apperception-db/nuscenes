@@ -1,14 +1,16 @@
-from typing import Dict, List
 from datetime import datetime
+from typing import Dict, List
+
 import pandas as pd
 
 from .typings import Frame
+
 
 def get_videos(sample_data: "pd.DataFrame") -> "Dict[str, List[Frame]]":
     videos: "Dict[str, List[Frame]]" = {}
     for t in sample_data.itertuples(index=False):
         scene = t.scene_name
-        file = t.filename.split('/')[1]
+        file = t.filename.split("/")[1]
         key = f"{scene}-{file}"
         if key not in videos:
             videos[key] = []
@@ -24,11 +26,11 @@ def get_videos(sample_data: "pd.DataFrame") -> "Dict[str, List[Frame]]":
             t.ego_rotation,
             datetime.fromtimestamp(t.timestamp / 1_000_000),
             t.camera_heading,
-            t.ego_heading
+            t.ego_heading,
         )
         videos[key].append(t)
 
     for video in videos.values():
         video.sort(key=lambda v: v[9])
-            
+
     return videos
