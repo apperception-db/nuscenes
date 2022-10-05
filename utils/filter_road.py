@@ -39,8 +39,8 @@ def validator(tokens: "Set[str]") -> "Dict[str, Callable[[dict], bool]]":
         assert {"id", "forwardLanes", "backwardLanes"} == {*e.keys()}
         values = (
             e["id"][:-len("_sec")] in tokens,
-            *(l[:-len("_sec")] in tokens for l in e["forwardLanes"]),
-            *(l[:-len("_sec")] in tokens for l in e["backwardLanes"]),
+            *(lane[:-len("_sec")] in tokens for lane in e["forwardLanes"]),
+            *(lane[:-len("_sec")] in tokens for lane in e["backwardLanes"]),
         )
         if all(values):
             return True
