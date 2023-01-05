@@ -14,7 +14,7 @@ def get_videos(sample_data: "pd.DataFrame") -> "Dict[str, List[Frame]]":
         key = f"{scene}-{file}"
         if key not in videos:
             videos[key] = []
-        t = (
+        t = Frame(
             t.scene_name,
             t.token,
             t.frame_order,
