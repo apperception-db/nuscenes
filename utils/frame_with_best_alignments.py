@@ -4,21 +4,35 @@ from .typings import Frame
 
 
 def frame_with_best_alignments(scene: "List[Frame]", fps: int):
-    max_aligned_frames = -1
+    min_misalignment = float('inf')
+    max_misalignment_value = None
+    misalignments = None
     frame_idx = None
     frame_t = None
     for idx, frame in enumerate(scene):
         t = frame[9]
-        aligned_frames = 0
+        misalignment = 0.
+        _max_misalignment_value = -float('inf')
+        _misalignments = []
         for _frame in scene:
             _t = _frame[9]
             sec_diff = (t - _t).total_seconds()
-            if (sec_diff * fps).is_integer():
-                aligned_frames += 1
-        if aligned_frames > max_aligned_frames:
-            max_aligned_frames = aligned_frames
+            _misalignment = sec_diff * fps
+            _m = _misalignment - round(_misalignment)
+            _misalignments.append(_m)
+            m = abs(_m)
+            misalignment += m
+            _max_misalignment_value = max(_max_misalignment_value, m)
+        if misalignment < min_misalignment:
+            min_misalignment = misalignment
             frame_idx = idx
             frame_t = t
-    if frame_idx is None or frame_t is None:
-        raise Exception()
-    return frame_idx, frame_t
+            max_misalignment_value = _max_misalignment_value
+            misalignments = _misalignments
+    if frame_idx is None or frame_t is None or max_misalignment_value is None or misalignments is None:
+        raise Exception(f'frame_idx: {frame_idx}, frame_t: {frame_t}, max_misalignment_value: {max_misalignment_value}, misalignments: {misalignments}')
+
+    print(f"misalignment: {(min_misalignment * 100 / len(scene)):.10f} %")
+    print(f"max misalignment: {(max_misalignment_value * 100):.3f} %")
+    assert max_misalignment_value < 0.15
+    return frame_idx, frame_t, misalignments

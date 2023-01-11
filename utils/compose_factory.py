@@ -20,7 +20,8 @@ def compose_factory(
         t_start = scene[0][9]
         t_end = scene[-1][9]
 
-        frame_idx, frame_t = frame_with_best_alignments(scene, fps)
+        frame_idx, frame_t, misalignment, max_misalignment = frame_with_best_alignments(scene, fps)
+        print(f"misalignment: {misalignment / fps / len(scene)} second / frame")
 
         frames_before = int((frame_t - t_start).total_seconds() * fps)
 
