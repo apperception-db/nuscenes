@@ -5,11 +5,11 @@ import cv2
 import numpy.typing as npt
 from tqdm import tqdm
 
-from .load_image import load_image
-from .typings import Frame
+from ..load_image import load_image
+from ..typings import Frame
 
 
-def compose_compressed_factory(
+def compose_factory(
     fps: int, raw_dir: str, processed_dir: str, interpolate: bool
 ):
     def compose(location: str, name: str, scene: "List[Frame]", img_cache: "dict[str, npt.NDArray] | None" = None):
@@ -22,8 +22,8 @@ def compose_compressed_factory(
         for i, frame in tqdm(enumerate(scene), total=len(scene)):
             _frames.append((load_image(img_cache, frame.filename, raw_dir), i))
 
-        filename = f'compressed-{name}.mp4'
-        base = os.path.join(processed_dir, "videos", location)
+        filename = f'{location}-{name}.mp4'
+        base = os.path.join(processed_dir, "videos")
         if not os.path.exists(base):
             os.makedirs(base)
         out = cv2.VideoWriter(

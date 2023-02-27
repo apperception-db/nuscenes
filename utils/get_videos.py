@@ -27,6 +27,7 @@ def get_videos(sample_data: "pd.DataFrame") -> "Dict[str, List[Frame]]":
             datetime.fromtimestamp(t.timestamp / 1_000_000),
             t.camera_heading,
             t.ego_heading,
+            t.location
         )
         videos[key].append(t)
 

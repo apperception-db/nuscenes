@@ -9,8 +9,8 @@ import numpy.typing as npt
 from tqdm import tqdm
 
 from .frame_with_best_alignments import frame_with_best_alignments
-from .load_image import load_image
-from .typings import Frame
+from ..load_image import load_image
+from ..typings import Frame
 
 
 def compose_factory(

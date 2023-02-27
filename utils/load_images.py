@@ -1,5 +1,4 @@
 import multiprocessing
-from typing import Tuple
 from .load_image import load_image
 
 import numpy.typing as npt
@@ -20,6 +19,6 @@ def load_images(raw_dir: "str", files: "list[str]") -> "dict[str, npt.NDArray]":
         }
 
 
-def _load(args: "Tuple[str, str]"):
+def _load(args: "tuple[str, str]"):
     name, raw_dir = args
     return name, load_image({}, name, raw_dir)

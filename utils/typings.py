@@ -18,3 +18,4 @@ class Frame(NamedTuple):
     timestamp: datetime
     camera_heading: float
     ego_heading: float
+    location: 'str' = ''

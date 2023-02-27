@@ -1,6 +1,6 @@
 from typing import List
 
-from .typings import Frame
+from ..typings import Frame
 
 
 def frame_with_best_alignments(scene: "List[Frame]", fps: int):
