@@ -6,7 +6,7 @@ Float4 = Tuple[float, float, float, float]
 Float33 = Tuple[Float3, Float3, Float3]
 
 class Frame(NamedTuple):
-    scene: str
+    camera_id: str
     token: str
     frame_order: int
     filename: str

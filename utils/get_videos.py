@@ -10,12 +10,11 @@ def get_videos(sample_data: "pd.DataFrame") -> "Dict[str, List[Frame]]":
     videos: "Dict[str, List[Frame]]" = {}
     for t in sample_data.itertuples(index=False):
         scene = t.scene_name
-        file = t.filename.split("/")[1]
-        key = f"{scene}-{file}"
+        key = f"{scene}-{t.channel}"
         if key not in videos:
             videos[key] = []
         t = Frame(
-            t.scene_name,
+            key,
             t.token,
             t.frame_order,
             t.filename,
