@@ -6,9 +6,15 @@ import pandas as pd
 from .typings import Frame
 
 
-def get_videos(sample_data: "pd.DataFrame") -> "Dict[str, List[Frame]]":
+def get_videos(
+    sample_data: "pd.DataFrame",
+    only_keyframe: "bool" = False
+) -> "Dict[str, List[Frame]]":
     videos: "Dict[str, List[Frame]]" = {}
     for t in sample_data.itertuples(index=False):
+        if only_keyframe and not t.is_key_frame:
+            continue
+
         scene = t.scene_name
         key = f"{scene}-{t.channel}"
         if key not in videos:
